@@ -2,16 +2,16 @@ import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
-  logo: <span>My Project</span>,
+  logo: <span>r6-dissect</span>,
   project: {
-    link: 'https://github.com/shuding/nextra-docs-template',
+    link: 'https://github.com/redraskal/r6-dissect',
   },
   chat: {
-    link: 'https://discord.com',
+    link: 'https://discord.gg/XdEXWQZZAa',
   },
-  docsRepositoryBase: 'https://github.com/shuding/nextra-docs-template',
+  docsRepositoryBase: 'https://github.com/redraskal/r6-dissect-docs',
   footer: {
-    text: 'Nextra Docs Template',
+    text: 'Docs powered by Nextra',
   },
 }
 

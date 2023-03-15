@@ -9,7 +9,7 @@ const config: DocsThemeConfig = {
   chat: {
     link: 'https://discord.gg/XdEXWQZZAa',
   },
-  docsRepositoryBase: 'https://github.com/redraskal/r6-dissect-docs/blob/main',
+  docsRepositoryBase: 'https://github.com/redraskal/r6-dissect-docs/edit/main',
   footer: {
     text: 'Docs powered by Nextra',
   },

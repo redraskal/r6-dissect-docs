@@ -1,0 +1,6 @@
+{
+	"cli": "CLI",
+	"go": "Go",
+	"bun": "Bun (TypeScript)",
+	"ffi": "FFI"
+}

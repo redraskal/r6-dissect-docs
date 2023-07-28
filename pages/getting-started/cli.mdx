@@ -1,0 +1,170 @@
+import { Tabs, Tab, Card } from "nextra/components";
+
+# Introduction to r6-dissect CLI
+
+## CLI usage
+
+Open Command Prompt or your desired terminal. If you placed r6-dissect in a different folder of choice, open the terminal in the containing folder.
+
+On Windows, a trick for opening Command Prompt in the current File Explorer folder is typing "cmd" in the File Explorer address bar and hitting Enter (the current folder path in top middle of window).
+
+## Match overview
+
+To get started, you can print basic match information to the terminal. This is useful for identifying your matches outside of the game.
+
+<Tabs items={["For a round", "For a match"]}>
+	<Tab>
+		```bash
+		r6-dissect Match-2023-03-13_23-23-58-199/Match-2023-03-13_23-23-58-199-R01.rec
+		```
+	</Tab>
+	<Tab>
+		```bash
+		r6-dissect Match-2023-03-13_23-23-58-199
+		```
+	</Tab>
+	```
+	5:20PM INF Version:          Y8S1/7422506
+	5:20PM INF Recording Player: redraskal [1f63af29-7ebe-48e7-b570-e820632d9565]
+	5:20PM INF Match ID:         d74d2685-193f-4fee-831f-41f8c7792250
+	5:20PM INF Timestamp:        2023-03-13 13:00:08 -0500 CDT
+	5:20PM INF Match Type:       QuickMatch
+	5:20PM INF Game Mode:        Bomb
+	5:20PM INF Map:              House
+	```
+</Tabs>
+
+On Windows, you may need to escape the replay path with double quotes like so:
+
+```batch
+r6-dissect "C:\Users\Ben\Downloads\LIQ_MAG\LIQUID_MAGIC\Match-2023-03-25_14-24-02-118"
+```
+
+## Generating JSON data
+
+You can save round stats to a JSON file like so:
+
+<Tabs items={["For a round", "For a match"]}>
+	<Tab>
+		```bash
+		r6-dissect Match-2023-03-13_23-23-58-199/Match-2023-03-13_23-23-58-199-R01.rec -x round_1.json
+		```
+	</Tab>
+	<Tab>
+		```bash
+		r6-dissect Match-2023-03-13_23-23-58-199 -x match.json
+		```
+	</Tab>
+</Tabs>
+
+You can change the name of the JSON file.
+
+### Example output for round_1.json:
+
+```json
+{
+  "gameVersion": "Y8S1",
+  "codeVersion": 7422506,
+  "timestamp": "2023-03-13T23:25:46Z",
+  "matchType": {
+    "name": "Ranked",
+    "id": 2
+  },
+  "map": {
+    "name": "Villa",
+    "id": 88107330328
+  },
+  "site": "2F Aviator Room, 2F Games Room",
+  "recordingPlayerID": 15451868541914624436,
+  "recordingProfileID": "1f63af29-7ebe-48e7-b570-e820632d9565",
+  "additionalTags": "423855620",
+  "gamemode": {
+    "name": "Bomb",
+    "id": 327933806
+  },
+...
+  "teams": [
+    {
+      "name": "YOUR TEAM",
+      "score": 1,
+      "won": true,
+      "winCondition": "KilledOpponents",
+      "role": "Attack"
+    },
+    {
+      "name": "OPPONENTS",
+      "score": 0,
+      "won": false,
+      "role": "Defense"
+    }
+  ],
+  "players": [
+    {
+      "id": 1830934665040226621,
+      "profileID": "f33396d4-714b-442d-b110-9237e291cc71",
+      "username": "IanFiftyForty",
+      "teamIndex": 1,
+      "operator": {
+        "name": "Oryx",
+        "id": 104189664155
+      },
+      "heroName": 243632506966,
+      "alliance": 0,
+      "roleImage": 104189664090,
+      "roleName": "ORYX",
+      "rolePortrait": 258649622576
+    },
+...
+  "matchFeedback": [
+    {
+      "type": "Other",
+      "time": "2:59",
+      "timeInSeconds": 179,
+      "message": "Friendly Fire is now active"
+    },
+    {
+      "type": "Kill",
+      "username": "ReithYT",
+      "target": "Ambatakum.",
+      "headshot": false,
+      "time": "1:51",
+      "timeInSeconds": 111
+    },
+...
+```
+
+## Generating an Excel spreadsheet
+
+You can also generate an Excel spreadsheet for an entire match.
+
+This spreadsheet will consist of one sheet containing player stats throughout the match as well as a sheet for each round.
+
+```bash
+r6-dissect Match-2023-03-13_23-23-58-199-R01 -x match.xlsx
+```
+
+As you can see, all you need change to generate Excel spreadsheets instead of JSON is to change the file extension from .json to .xlsx.
+
+<br />
+<Card title="Download example spreadsheet" href="https://github.com/redraskal/r6-dissect/raw/main/examples/unranked.xlsx" />
+
+## Writing JSON to stdout
+
+You can use the stdout export option to receive a JSON response in the terminal without any logging.
+
+This is useful for bash scripts or for interfacing with r6-dissect in other programming languages.
+
+For example, in TypeScript (using the [Bun](https://bun.sh) runtime) you could write the following code to parse round data without creating a JSON file:
+
+```ts
+const data = Bun.spawnSync({
+	cmd: ["r6-dissect", "-x", "stdout", "Match-2023-03-13_23-23-58-199/Match-2023-03-13_23-23-58-199-R01.rec"],
+	stdout: "pipe",
+}).stdout.toString();
+const json = JSON.parse(data);
+```
+
+Although, in this case, we have an r6-dissect npm package for Bun that you can use.
+
+<br />
+<Card title="Creating a TypeScript project" href="/getting-started/bun" />

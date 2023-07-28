@@ -1,0 +1,41 @@
+# Installation
+
+Download the latest version of r6-dissect at https://github.com/redraskal/r6-dissect/releases under "Assets".
+
+### Assets
+
+Download the appropriate file for your operating system. If you'd like, you can verify the integrity of the releases using the .md5 files.
+Otherwise, they are safe to ignore.
+
+| OS      |               Filename                |
+| :------ | :-----------------------------------: |
+| Windows |  r6-dissect-v.....-windows-amd64.zip  |
+| macOS   | r6-dissect-v.....-darwin-amd64.tar.gz |
+| Linux   | r6-dissect-v.....-linux-amd64.tar.gz  |
+
+Unzip the release. You will see 5 files.
+
+### Release files
+
+| Filename                    |        Purpose         |
+| :-------------------------- | :--------------------: |
+| r6-dissect(.exe)            |     CLI executable     |
+| libr6dissect.h              |     C header file      |
+| libr6dissect.(dll,so,dylib) | Shared library for FFI |
+| LICENSE                     |    Our MIT license     |
+| README.md                   | Overview of r6-dissect |
+
+You can move the CLI executable to a couple of places. Here are our recommendations:
+
+* Windows: `%userprofile%/r6-dissect.exe`
+* Linux & macOS: `/usr/local/bin/r6-dissect`
+
+On Windows, you can run the following command in Command Prompt to add %userprofile% to PATH:
+
+```batch
+setx PATH "%PATH%;%USERPROFILE%"
+```
+
+The command will ensure you can use r6-dissect in any location.
+
+You could also place the CLI executable in the replay folder you will be working with.
